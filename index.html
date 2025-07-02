@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dina Razafy - Assistante Virtuelle Polyvalente</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:wght@500&display=swap" rel="stylesheet">
+
+    <style>
+        /* * --- ROOT VARIABLES & BASIC SETUP --- 
+         * Définition des polices et des palettes de couleurs pour les thèmes clair et sombre.
+         */
+        :root {
+            /* Fonts */
+            --font-primary: 'Inter', sans-serif;
+            --font-accent: 'Lora', serif;
+
+            /* Light Mode Colors */
+            --bg-light: #F9F9F9;
+            --text-primary-light: #1d1d1f;
+            --text-secondary-light: #86868b;
+            --accent-light: #C59B6D; /* Couleur accentuée dorée/beige */
+            --border-light: #e0e0e0;
+
+            /* Dark Mode Colors */
+            --bg-dark: #121212;
+            --text-primary-dark: #EAEAEA;
+            --text-secondary-dark: #8D8D8D;
+            --accent-dark: #D4AF8A; /* Couleur accentuée plus claire pour le mode sombre */
+            --border-dark: #333333;
+            --card-bg-dark: #1e1e1e;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* --- THEME STYLES --- */
+        .light-mode {
+            background-color: var(--bg-light);
+            color: var(--text-primary-light);
+            --bg-current: var(--bg-light);
+            --text-primary-current: var(--text-primary-light);
+            --text-secondary-current: var(--text-secondary-light);
+            --accent-current: var(--accent-light);
+            --border-current: var(--border-light);
+            --card-bg-current: #ffffff;
+        }
+
+        .dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-primary-dark);
+            --bg-current: var(--bg-dark);
+            --text-primary-current: var(--text-primary-dark);
+            --text-secondary-current: var(--text-secondary-dark);
+            --accent-current: var(--accent-dark);
+            --border-current: var(--border-dark);
+            --card-bg-current: var(--card-bg-dark);
+        }
+
+        /* --- GENERAL LAYOUT --- */
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 40px;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            text-align: center;
+            color: var(--text-primary-current);
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: transparent;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .main-header.scrolled {
+            background-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .dark-mode .main-header.scrolled {
+            background-color: rgba(20, 20, 20, 0.7);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 40px;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: var(--text-primary-current);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary-current);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--accent-current);
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-secondary-current);
+            padding: 5px;
+        }
+        .theme-toggle .icon-sun { display: none; }
+        .theme-toggle .icon-moon { display: block; }
+        .dark-mode .theme-toggle .icon-sun { display: block; }
+        .dark-mode .theme-toggle .icon-moon { display: none; }
+        .theme-toggle svg {
+            transition: transform 0.3s ease;
+        }
+        .theme-toggle:hover svg {
+            transform: scale(1.1) rotate(15deg);
+            color: var(--accent-current);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 40px;
+        }
+        .hero-headline {
+            font-family: var(--font-primary);
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text-primary-current);
+            animation: fadeIn 1s 0.2s both;
+        }
+        .hero-headline span {
+            display: inline-block;
+            animation: fadeInUp 1s 0.5s both;
+        }
+        .hero-headline span:last-child {
+            animation-delay: 0.7s;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-secondary-current);
+            animation: fadeIn 1s 1.5s both;
+            font-size: 0.8rem;
+        }
+        .scroll-indicator .arrow {
+            animation: bounce 2s infinite;
+        }
+
+        /* --- EXPERIENCES SECTION (Work) --- */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+        .project-card {
+            background: var(--card-bg-current);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            text-decoration: none;
+            color: var(--text-primary-current);
+            display: flex;
+            flex-direction: column;
+        }
+        .dark-mode .project-card {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .dark-mode .project-card:hover {
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+        }
+        .card-content h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.5rem;
+            color: var(--accent-current);
+        }
+        .card-content p {
+            margin: 0;
+            color: var(--text-secondary-current);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        /* --- ABOUT SECTION --- */
+        .about-content {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+        }
+        .about-image {
+            flex: 1;
+            max-width: 400px;
+        }
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .about-text {
+            flex: 1.5;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-secondary-current);
+        }
+        .about-text p {
+            margin: 0 0 20px 0;
+        }
+        .about-text strong {
+            color: var(--text-primary-current);
+        }
+
+        /* --- SKILLS & TOOLS SECTION --- */
+        .skills-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .skills-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+        .skills-list h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--text-primary-current);
+        }
+        .skills-list li {
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-current);
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .skills-list li:last-child {
+            border-bottom: none;
+        }
+        .skills-list li:hover {
+            color: var(--accent-current);
+            transform: translateX(5px);
+        }
+
+        /* --- CONTACT/FOOTER SECTION --- */
+        .contact-section {
+            background-color: var(--card-bg-current);
+            padding: 100px 40px;
+            text-align: center;
+            transition: background-color 0.4s ease;
+        }
+        .contact-headline {
+            font-family: var(--font-primary);
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        .contact-email {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            color: var(--accent-current);
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+        }
+        .contact-email::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-current);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+        .contact-email:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        .social-links {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        .social-links a {
+            text-decoration: none;
+            color: var(--text-secondary-current);
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .social-links a:hover {
+            color: var(--accent-current);
+            transform: translateY(-3px);
+        }
+        .footer-info {
+            margin-top: 60px;
+            color: var(--text-secondary-current);
+            font-size: 0.9rem;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Scroll-triggered animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Staggered animations for a smoother appearance on scroll */
+        .project-card.is-visible:nth-child(2) { transition-delay: 0.1s; }
+        .project-card.is-visible:nth-child(3) { transition-delay: 0.2s; }
+        .project-card.is-visible:nth-child(4) { transition-delay: 0.3s; }
+        .skills-list:nth-child(1) li.is-visible:nth-child(1) { transition-delay: 0.1s; }
+        .skills-list:nth-child(1) li.is-visible:nth-child(2) { transition-delay: 0.2s; }
+        .skills-list:nth-child(1) li.is-visible:nth-child(3) { transition-delay: 0.3s; }
+        .skills-list:nth-child(1) li.is-visible:nth-child(4) { transition-delay: 0.4s; }
+        .skills-list:nth-child(1) li.is-visible:nth-child(5) { transition-delay: 0.5s; }
+        .skills-list:nth-child(2) li.is-visible:nth-child(1) { transition-delay: 0.1s; }
+        .skills-list:nth-child(2) li.is-visible:nth-child(2) { transition-delay: 0.2s; }
+        .skills-list:nth-child(2) li.is-visible:nth-child(3) { transition-delay: 0.3s; }
+
+        /* --- RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            .content-section {
+                padding: 80px 20px;
+            }
+            .about-content {
+                flex-direction: column;
+            }
+            .project-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .main-nav {
+                padding: 15px 20px;
+            }
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="light-mode">
+
+    <!-- HEADER & NAVIGATION -->
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="#" class="nav-logo">DR</a>
+            <ul class="nav-links">
+                <li><a href="#experiences">Expériences</a></li>
+                <li><a href="#apropos">À Propos</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/><circle cx="12" cy="12" r="5"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-headline">
+                    <span>Dina Razafy.</span><br>
+                    <span>Assistante Virtuelle Polyvalente.</span>
+                </h1>
+                <div class="scroll-indicator">
+                    <p>Faites défiler</p>
+                    <div class="arrow">↓</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCES SECTION -->
+        <section id="experiences" class="work-section content-section">
+            <h2 class="section-title">Expériences Professionnelles</h2>
+            <div class="project-grid">
+                <div class="project-card animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2832&auto=format&fit=crop" alt="Espace de travail coaching" onerror="this.onerror=null;this.src='https://placehold.co/600x400/C59B6D/FFFFFF?text=Coaching';">
+                    <div class="card-content">
+                        <h3>Coach, experte en Féminité (Suisse)</h3>
+                        <p>Gestion complète des opérations : e-mails, agendas, planification des programmes, coordination des activités, service clientèle, modération des réseaux sociaux et assistance technique sur Wordpress.</p>
+                    </div>
+                </div>
+                <div class="project-card animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1455849318743-b2233052fcff?q=80&w=2669&auto=format&fit=crop" alt="Bureau d'édition" onerror="this.onerror=null;this.src='https://placehold.co/600x400/C59B6D/FFFFFF?text=Édition';">
+                    <div class="card-content">
+                        <h3>Maison d’édition (France)</h3>
+                        <p>Coordination éditoriale : gestion des rendez-vous, négociation d’ouvrages, recrutement et coordination des traducteurs, prospection de partenaires et gestion de la base de données.</p>
+                    </div>
+                </div>
+                <div class="project-card animate-on-scroll">
+                     <img src="https://images.unsplash.com/photo-1596701062351-8c2c14d1fdd0?q=80&w=2574&auto=format&fit=crop" alt="Produits cosmétiques" onerror="this.onerror=null;this.src='https://placehold.co/600x400/C59B6D/FFFFFF?text=Cosmétique';">
+                    <div class="card-content">
+                        <h3>Entreprise cosmétique (France)</h3>
+                        <p>Support e-commerce et marketing : gestion des commandes, support client, gestion des stocks, rédaction d'articles de blog, newsletters et modération du compte Instagram.</p>
+                    </div>
+                </div>
+                <div class="project-card animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1582450871972-ab5ca6416432?q=80&w=2670&auto=format&fit=crop" alt="Clés d'une propriété immobilière" onerror="this.onerror=null;this.src='https://placehold.co/600x400/C59B6D/FFFFFF?text=Immobilier';">
+                    <div class="card-content">
+                        <h3>Agence immobilière (Belgique)</h3>
+                        <p>Administration immobilière : gestion des dossiers (propriétaires, locataires), publication d'annonces, rédaction de baux, suivi des fournisseurs et facturation des décomptes locatifs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="apropos" class="about-section content-section">
+            <h2 class="section-title animate-on-scroll">À Propos de Moi</h2>
+            <div class="about-content">
+                <div class="about-image animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=2576&auto=format&fit=crop" alt="Portrait professionnel de Dina Razafy" onerror="this.onerror=null;this.src='https://placehold.co/400x400/FFFFFF/333333?text=Dina+Razafy';">
+                </div>
+                <div class="about-text animate-on-scroll">
+                    <p>Assistante virtuelle polyvalente avec <strong>6 ans d'expérience</strong>, je suis dédiée à l'optimisation de la gestion, des opérations et de la communication pour mes clients. Mon objectif est de transformer les défis complexes en solutions simples et élégantes, en assurant une coordination fluide et un support fiable.</p>
+                    <p><strong>Éducation :</strong> Maitrise et Licence en Communication.</p>
+                    <p><strong>Langues :</strong> Je travaille couramment en <strong>Français</strong> et en <strong>Anglais</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS & TOOLS SECTION -->
+        <section id="skills" class="skills-section content-section">
+            <h2 class="section-title animate-on-scroll">Compétences & Outils</h2>
+            <div class="skills-container">
+                <ul class="skills-list">
+                    <h3 class="animate-on-scroll">Compétences Clés</h3>
+                    <li class="animate-on-scroll">Gestion de projet & Opérations</li>
+                    <li class="animate-on-scroll">Relation et service client</li>
+                    <li class="animate-on-scroll">Planification & Coordination</li>
+                    <li class="animate-on-scroll">Création de contenu & Stratégie</li>
+                    <li class="animate-on-scroll">Organisation & Sens du détail</li>
+                </ul>
+                <ul class="skills-list">
+                    <h3 class="animate-on-scroll">Outils Maîtrisés</h3>
+                    <li class="animate-on-scroll">Suite Office & Google Workspace</li>
+                    <li class="animate-on-scroll">Trello, Asana, Notion, Slack</li>
+                    <li class="animate-on-scroll">Canva, Capcut, Wordpress</li>
+                    <li class="animate-on-scroll">System.io, ActiveCampaign, Zoho</li>
+                    <li class="animate-on-scroll">IA (ChatGPT, Gemini, etc.)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- CONTACT & FOOTER SECTION -->
+        <footer id="contact" class="contact-section">
+            <div class="contact-content">
+                <h2 class="contact-headline animate-on-scroll">Discutons de votre projet.</h2>
+                <a href="mailto:rejoindredina@gmail.com" class="contact-email animate-on-scroll">rejoindredina@gmail.com</a>
+                <div class="social-links animate-on-scroll">
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                </div>
+                 <div class="footer-info animate-on-scroll">
+                    <p>📍 Île Maurice | 📞 +230 55 07 62 12</p>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- THEME TOGGLER ---
+            // This script handles switching between light and dark mode and saves the user's preference.
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+
+            // Check for saved theme in localStorage and set it on page load
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.replace('light-mode', 'dark-mode');
+            } else {
+                 body.classList.replace('dark-mode', 'light-mode');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                if (body.classList.contains('light-mode')) {
+                    body.classList.replace('light-mode', 'dark-mode');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    body.classList.replace('dark-mode', 'light-mode');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            // --- NAVBAR SCROLL EFFECT ---
+            // This script adds a background and shadow to the header when the user scrolls down.
+            const header = document.querySelector('.main-header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // --- SCROLL-TRIGGERED ANIMATIONS ---
+            // This script uses the Intersection Observer API to fade in elements as they enter the viewport.
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    // If the element is intersecting (visible), add the 'is-visible' class
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            });
+
+            // Observe each animated element
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+
+        });
+    </script>
+</body>
+</html>
