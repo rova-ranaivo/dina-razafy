@@ -10,6 +10,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:wght@500&display=swap" rel="stylesheet">
 
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+
     <style>
         /* * --- ROOT VARIABLES & BASIC SETUP --- 
          * Définition des polices et des palettes de couleurs pour les thèmes clair et sombre.
@@ -44,6 +47,54 @@
             margin: 0;
             padding: 0;
             transition: background-color 0.4s ease, color 0.4s ease;
+            cursor: none; /* Hide the default cursor */
+        }
+
+        /* --- NEW CUSTOM CURSOR --- */
+        .cursor-outer, .cursor-inner {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease, background-color 0.4s ease;
+        }
+
+        .cursor-outer {
+            width: 30px;
+            height: 30px;
+            background-color: var(--accent-current);
+            opacity: 0.4;
+        }
+
+        .cursor-inner {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-current);
+        }
+
+        /* Cursor hover state */
+        .cursor-outer.hover {
+            width: 50px;
+            height: 50px;
+            opacity: 0.2;
+        }
+
+        .cursor-inner.hover {
+            width: 0;
+            height: 0;
+            opacity: 0;
+        }
+
+
+        /* Hide custom cursor on touch devices */
+        @media (max-width: 1024px) {
+            .cursor-outer, .cursor-inner {
+                display: none;
+            }
+            body {
+                cursor: auto;
+            }
         }
 
         /* --- THEME STYLES --- */
@@ -145,7 +196,7 @@
         .theme-toggle {
             background: none;
             border: none;
-            cursor: pointer;
+            cursor: none; /* Use custom cursor */
             color: var(--text-secondary-current);
             padding: 5px;
         }
@@ -431,6 +482,10 @@
 </head>
 <body class="light-mode">
 
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-outer"></div>
+    <div class="cursor-inner"></div>
+
     <!-- HEADER & NAVIGATION -->
     <header class="main-header">
         <nav class="main-nav">
@@ -467,28 +522,28 @@
             <h2 class="section-title">Expériences Professionnelles</h2>
             <div class="project-grid">
                 <div class="project-card animate-on-scroll">
-                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2832&auto=format&fit=crop" alt="Espace de travail coaching" onerror="this.onerror=null;this.src='https://placehold.co/600x400/C59B6D/FFFFFF?text=Coaching';">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2120&auto=format&fit=crop" alt="Femme pratiquant le yoga dans un cadre serein" onerror="this.onerror=null;this.src='https://placehold.co/600x400/C59B6D/FFFFFF?text=Coaching';">
                     <div class="card-content">
                         <h3>Coach, experte en Féminité (Suisse)</h3>
                         <p>Gestion complète des opérations : e-mails, agendas, planification des programmes, coordination des activités, service clientèle, modération des réseaux sociaux et assistance technique sur Wordpress.</p>
                     </div>
                 </div>
                 <div class="project-card animate-on-scroll">
-                    <img src="https://images.unsplash.com/photo-1455849318743-b2233052fcff?q=80&w=2669&auto=format&fit=crop" alt="Bureau d'édition" onerror="this.onerror=null;this.src='https://placehold.co/600x400/C59B6D/FFFFFF?text=Édition';">
+                    <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=2128&auto=format&fit=crop" alt="Bureau avec des livres anciens et une machine à écrire" onerror="this.onerror=null;this.src='https://placehold.co/600x400/C59B6D/FFFFFF?text=Édition';">
                     <div class="card-content">
                         <h3>Maison d’édition (France)</h3>
                         <p>Coordination éditoriale : gestion des rendez-vous, négociation d’ouvrages, recrutement et coordination des traducteurs, prospection de partenaires et gestion de la base de données.</p>
                     </div>
                 </div>
                 <div class="project-card animate-on-scroll">
-                     <img src="https://images.unsplash.com/photo-1596701062351-8c2c14d1fdd0?q=80&w=2574&auto=format&fit=crop" alt="Produits cosmétiques" onerror="this.onerror=null;this.src='https://placehold.co/600x400/C59B6D/FFFFFF?text=Cosmétique';">
+                     <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=2070&auto=format&fit=crop" alt="Produits cosmétiques naturels sur un fond élégant" onerror="this.onerror=null;this.src='https://placehold.co/600x400/C59B6D/FFFFFF?text=Cosmétique';">
                     <div class="card-content">
                         <h3>Entreprise cosmétique (France)</h3>
                         <p>Support e-commerce et marketing : gestion des commandes, support client, gestion des stocks, rédaction d'articles de blog, newsletters et modération du compte Instagram.</p>
                     </div>
                 </div>
                 <div class="project-card animate-on-scroll">
-                    <img src="https://images.unsplash.com/photo-1582450871972-ab5ca6416432?q=80&w=2670&auto=format&fit=crop" alt="Clés d'une propriété immobilière" onerror="this.onerror=null;this.src='https://placehold.co/600x400/C59B6D/FFFFFF?text=Immobilier';">
+                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1973&auto=format&fit=crop" alt="Agent immobilier présentant une maison à un couple" onerror="this.onerror=null;this.src='https://placehold.co/600x400/C59B6D/FFFFFF?text=Immobilier';">
                     <div class="card-content">
                         <h3>Agence immobilière (Belgique)</h3>
                         <p>Administration immobilière : gestion des dossiers (propriétaires, locataires), publication d'annonces, rédaction de baux, suivi des fournisseurs et facturation des décomptes locatifs.</p>
@@ -609,6 +664,55 @@
             // Observe each animated element
             animatedElements.forEach(el => {
                 observer.observe(el);
+            });
+
+            // --- CUSTOM CURSOR SCRIPT ---
+            // This script creates a custom cursor that follows the mouse and interacts with elements.
+            const cursorOuter = document.querySelector('.cursor-outer');
+            const cursorInner = document.querySelector('.cursor-inner');
+            
+            // Start the animation loop only if not on a touch device
+            if (window.matchMedia("(pointer: fine)").matches) {
+                let mouseX = 0, mouseY = 0;
+                let outerX = 0, outerY = 0;
+                let innerX = 0, innerY = 0;
+                const speedOuter = 0.2;
+                const speedInner = 0.8;
+
+                document.addEventListener('mousemove', e => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                });
+
+                const animateCursor = () => {
+                    // Outer cursor (slower, creates a trailing effect)
+                    outerX += (mouseX - outerX) * speedOuter;
+                    outerY += (mouseY - outerY) * speedOuter;
+                    cursorOuter.style.left = outerX + 'px';
+                    cursorOuter.style.top = outerY + 'px';
+
+                    // Inner cursor (faster, more responsive)
+                    innerX += (mouseX - innerX) * speedInner;
+                    innerY += (mouseY - innerY) * speedInner;
+                    cursorInner.style.left = innerX + 'px';
+                    cursorInner.style.top = innerY + 'px';
+
+                    requestAnimationFrame(animateCursor);
+                };
+                animateCursor();
+            }
+            
+            // Add hover effect for interactive elements
+            const hoverTargets = document.querySelectorAll('a, button, .project-card');
+            hoverTargets.forEach(target => {
+                target.addEventListener('mouseenter', () => {
+                    cursorOuter.classList.add('hover');
+                    cursorInner.classList.add('hover');
+                });
+                target.addEventListener('mouseleave', () => {
+                    cursorOuter.classList.remove('hover');
+                    cursorInner.classList.remove('hover');
+                });
             });
 
         });
